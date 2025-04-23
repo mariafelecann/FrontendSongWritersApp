@@ -1,5 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
+import axios from "axios";
 import { useFonts } from "expo-font";
+import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -23,6 +25,7 @@ export default function NewSongScreen() {
     "Montserrat-Regular": require("C:/Users/maria/OneDrive/Desktop/LICENTA/frontend_licenta/my-app/assets/fonts/Montserrat-Regular.ttf"),
     "Montserrat-SemiBold": require("C:/Users/maria/OneDrive/Desktop/LICENTA/frontend_licenta/my-app/assets/fonts/Montserrat-SemiBold.ttf"),
   });
+  const router = useRouter();
   useEffect(() => {
     async function prepare() {
       if (fontsLoaded) {
@@ -36,8 +39,39 @@ export default function NewSongScreen() {
     return null;
   }
 
-  const handleAnalyze = () => {
-    console.log("Analyzing lyrics:", lyrics);
+  // const handleAnalyze = () => {
+  //   console.log("Analyzing lyrics:", lyrics);
+  // };
+  const handleAnalyze = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.100.36:5000/ai/predict",
+        {
+          lyrics: lyrics,
+        }
+      );
+
+      const genreData = JSON.parse(response.data.genre);
+
+      const predictedGenre = genreData.prediction;
+      const sentiment = genreData.sentiment;
+      const decisionFunctionValues = genreData.decision_function;
+      console.info("predicted genre: ", predictedGenre);
+      console.info("decision function values: ", decisionFunctionValues);
+      console.info("sentiment: ", sentiment);
+      router.push({
+        pathname: "/statistics",
+        params: {
+          genre: JSON.stringify(predictedGenre),
+          decisionFunction: JSON.stringify(decisionFunctionValues),
+          sentiment: JSON.stringify(sentiment),
+          lyrics: lyrics,
+        },
+      });
+    } catch (error: any) {
+      console.error("Prediction error:", error.toJSON?.() || error);
+      alert("Failed to get prediction.");
+    }
   };
 
   return (
@@ -53,7 +87,7 @@ export default function NewSongScreen() {
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Lyrics:</Text>
             <TextInput
-              ref={lyricsInputRef} // Attach the ref to the TextInput
+              ref={lyricsInputRef}
               style={styles.lyricsInput}
               placeholder="Let your creativity flow..."
               multiline
