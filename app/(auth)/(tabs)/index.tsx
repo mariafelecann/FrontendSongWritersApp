@@ -120,7 +120,7 @@
 import { useFonts } from "expo-font";
 import { Link, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { prompts } from "C:/Users/maria/OneDrive/Desktop/LICENTA/frontend_licenta/my-app/utilis/prompts"; // Assuming correct relative path
@@ -181,15 +181,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.animationContainer}>
-        <LottieView
-          ref={animationRef}
-          source={require("C:/Users/maria/OneDrive/Desktop/LICENTA/frontend_licenta/my-app/assets/heyAnimation.json")}
-          style={styles.animation}
-          autoPlay
-          loop={false}
-        />
-      </View>
+      <View style={styles.animationContainer}></View>
       <Link style={styles.addButton} href="/newsong">
         <Text style={styles.addButtonText}>Add New Song</Text>
       </Link>
