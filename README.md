@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+# 🎵 Romanian Songwriters App (Frontend)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is the **frontend** of the **Romanian Songwriters mobile application**, developed using **Expo (React Native)**. The application helps Romanian songwriters write and analyze their lyrics through AI genre prediction and various linguistic statistics. This was made in an effort to fill the gap of NLP Romanian tools made for songwriters.
 
-## Get started
+👉 [Backend Repository (Flask)](https://github.com/mariafelecann/BackendSongWritersApp)
+👉 [Model Repository](https://github.com/mariafelecann/LicentaAI)
 
-1. Install dependencies
+---
 
+## 🚀 Features
+
+- **User Authentication**  
+  Register, log in, and manage your account securely.
+
+- **Write & Analyze Songs**  
+  Compose lyrics and receive instant AI feedback including:
+  - Suggested genre
+  - Song statistics
+
+- **Save & View Songs**  
+  Save analyzed songs and revisit them later through the song history.
+
+---
+
+## Some screenshots from the app:
+
+![statistucsScreenGenre](https://github.com/user-attachments/assets/17c131cf-6636-471e-a31a-ede0ebfd5b03)
+
+
+![registerScreen](https://github.com/user-attachments/assets/cd987e1b-4893-4540-9e18-aaaad1142985)
+
+
+![newSongScreen](https://github.com/user-attachments/assets/49807301-e293-47c9-81e8-64bac26f787a)
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React Native (Expo)
+- **Backend**: Flask (Python) – [See here](https://github.com/mariafelecann/BackendSongWritersApp)
+- **Model**: Scikit-learn, Spacy, NumPy, Pandas, Joblib
+- **Authentication**: JWT-based
+- **State Management**: React hooks & context
+- **Navigation**: React Navigation
+
+---
+
+## 📦 Installation
+
+1. Clone this repository:
    ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+   git clone https://github.com/your-username/SongwritersApp.git
+   cd SongwritersApp
+2. Install Dependencies: npm install
+3. Run App: npx expo start
