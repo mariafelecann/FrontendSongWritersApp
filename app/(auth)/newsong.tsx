@@ -82,14 +82,14 @@ export default function NewSongScreen() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
-          <Text style={styles.title}>Craft Your Next Hit</Text>
+          <Text style={styles.title}>Compune-ți următorul HIT 🪶</Text>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Lyrics:</Text>
+            <Text style={styles.inputLabel}>Versuri:</Text>
             <TextInput
               ref={lyricsInputRef}
               style={styles.lyricsInput}
-              placeholder="Let your creativity flow..."
+              placeholder="Lasă-ți sufletul să creeze..."
               multiline
               value={lyrics}
               onChangeText={setLyrics}
@@ -101,9 +101,9 @@ export default function NewSongScreen() {
           <View style={styles.bottomBar}>
             <View style={styles.inspirationNote}>
               <Text style={styles.inspirationText}>
-                Got your lyrics down? Prepare for{" "}
+                Ți-ai lăsat sufletul pe hârtie? E rândul{" "}
                 <Text style={styles.inspirationHighlight}>
-                  a glimpse into your song's sound :)
+                  versurilor să-ți vorbească :)
                 </Text>{" "}
               </Text>
             </View>
@@ -117,7 +117,7 @@ export default function NewSongScreen() {
                 color="#fff"
                 style={styles.aiIcon}
               />
-              <Text style={styles.analyzeButtonText}>Analyze</Text>
+              <Text style={styles.analyzeButtonText}>Explorează ⋆𖦹</Text>
             </TouchableOpacity>
           </View>
         </View>

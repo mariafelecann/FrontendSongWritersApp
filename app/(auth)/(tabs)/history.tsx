@@ -41,7 +41,7 @@ export default function HistoryScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your song history 🎶</Text>
+      <Text style={styles.title}>Istoricul tău de versuri 🎶</Text>
       <FlatList
         data={songs}
         keyExtractor={(item) => item.title}
@@ -68,7 +68,7 @@ export default function HistoryScreen() {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{selectedSong?.title}</Text>
             <Text style={styles.modalSubtitle}>
-              Genre: {selectedSong?.genre}
+              Gen muzical: {selectedSong?.genre}
             </Text>
             <ScrollView style={styles.scrollView}>
               <Text selectable style={styles.modalLyrics}>
@@ -79,7 +79,7 @@ export default function HistoryScreen() {
               style={styles.closeButton}
               onPress={() => setIsModalVisible(false)}
             >
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={styles.closeButtonText}>Închide</Text>
             </TouchableOpacity>
           </View>
         </View>

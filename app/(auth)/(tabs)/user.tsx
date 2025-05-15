@@ -8,7 +8,7 @@ export default function UserScreen() {
   };
   return (
     <View style={styles.container}>
-      <Text>User Profile</Text>
+      <Text>Profilul tău</Text>
       <Button title="Logout" onPress={handleLogOut} />
     </View>
   );

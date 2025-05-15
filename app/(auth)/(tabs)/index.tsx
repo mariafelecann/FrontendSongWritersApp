@@ -121,14 +121,22 @@ import { useFonts } from "expo-font";
 import { Link, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 // import LottieView from "lottie-react-native";
+import { AVPlaybackStatus } from "expo-av";
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
-import { prompts } from "C:/Users/maria/OneDrive/Desktop/LICENTA/frontend_licenta/my-app/utilis/prompts"; // Assuming correct relative path
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
+import { prompts } from "C:/Users/maria/OneDrive/Desktop/LICENTA/frontend_licenta/my-app/utilis/prompts"; // Assuming correct relative path
 SplashScreen.preventAutoHideAsync();
 
 const { width: screenWidth } = Dimensions.get("window");
-const PROMPT_WIDTH = screenWidth * 0.8; // Adjust as needed
+const PROMPT_WIDTH = screenWidth * 0.8;
 const PROMPT_MARGIN = 10;
 
 export default function HomeScreen() {
@@ -140,6 +148,7 @@ export default function HomeScreen() {
   });
   const scrollRef = useRef<ScrollView>(null);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -179,18 +188,33 @@ export default function HomeScreen() {
     return null;
   }
 
+  const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    if (!status.isLoaded) return;
+
+    if (status.didJustFinish) {
+      // Video finished and will remain on the last frame
+      console.log("Video finished playing.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.animationContainer}></View>
+      <Text style={styles.greetingText}>Bine ai venit!</Text>
+      <Image
+        source={require("C://Users//maria//OneDrive//Desktop//LICENTA//frontend_licenta//my-app//assets//cuteMusic.gif")}
+        style={styles.gif}
+      />
+
       <Link style={styles.addButton} href="/newsong">
-        <Text style={styles.addButtonText}>Add New Song</Text>
+        <Text style={styles.addButtonText}>Scrie un Nou Cântec</Text>
       </Link>
       <View style={styles.inspirationContainer}>
-        <Text style={styles.inspirationTitle}>Inspiration for today:</Text>
+        <Text style={styles.inspirationTitle}>Inspirația zilei:</Text>
         <ScrollView
           ref={scrollRef}
           horizontal
-          pagingEnabled // Snap to each prompt
+          pagingEnabled
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewContent}
           onMomentumScrollEnd={(event) => {
@@ -217,6 +241,12 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  greetingText: {
+    fontFamily: "Montserrat-SemiBold",
+    fontSize: 24,
+    color: "#333",
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     justifyContent: "flex-start",
@@ -230,6 +260,12 @@ const styles = StyleSheet.create({
     height: 150,
     marginBottom: 40,
   },
+  gif: {
+    marginTop: -200,
+    width: 200,
+    height: 200,
+  },
+
   animation: {
     width: "100%",
     height: "100%",

@@ -118,7 +118,7 @@ export default function PredictionResultScreen() {
 
   const handleConfirmSave = async () => {
     if (!songTitle.trim()) {
-      alert("Please enter a song title!");
+      alert("Te rog introdu un titlu!");
       return;
     }
 
@@ -136,7 +136,7 @@ export default function PredictionResultScreen() {
       router.replace("/");
     } catch (error) {
       console.error("Save song error:", error);
-      alert("Failed to save song.");
+      alert("Nu s-a putut salva piesa.");
     }
   };
 
@@ -183,7 +183,7 @@ export default function PredictionResultScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Song's Vibe 🎵</Text>
+      <Text style={styles.title}>Vibe-ul piesei tale 🎵</Text>
       <Text style={styles.genre}> {parsedGenre}</Text>
 
       <View style={styles.tabMenu}>
@@ -219,9 +219,9 @@ export default function PredictionResultScreen() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Enter Song Title</Text>
+            <Text style={styles.modalTitle}>Introdu numele cântecului</Text>
             <TextInput
-              placeholder="My awesome song..."
+              placeholder="Piesa mea preferată..."
               value={songTitle}
               onChangeText={setSongTitle}
               style={styles.textInput}
@@ -230,7 +230,7 @@ export default function PredictionResultScreen() {
               style={styles.confirmButton}
               onPress={handleConfirmSave}
             >
-              <Text style={styles.confirmButtonText}>Save</Text>
+              <Text style={styles.confirmButtonText}>Salvează</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -244,7 +244,7 @@ export default function PredictionResultScreen() {
         onPress={handleSaveButtonPress}
       >
         <FontAwesome name="save" size={18} color="#fff" />
-        <Text style={styles.backButtonText}>Save Song</Text>
+        <Text style={styles.backButtonText}>Salvează Cântecul</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -252,7 +252,7 @@ export default function PredictionResultScreen() {
         onPress={() => navigation.goBack()}
       >
         <FontAwesome name="arrow-left" size={18} color="#fff" />
-        <Text style={styles.backButtonText}>Back to Editor</Text>
+        <Text style={styles.backButtonText}>Înapoi la Editor</Text>
       </TouchableOpacity>
     </View>
   );

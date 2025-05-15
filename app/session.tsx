@@ -7,11 +7,13 @@ const AuthContext = React.createContext<{
   signIn: (email: string, password: string) => Promise<void>;
 
   signOut: () => void;
+  register: (email: string, password: string) => Promise<void>;
   session?: string | null;
   isLoading: boolean;
 }>({
   signIn: async () => {},
   signOut: () => null,
+  register: async () => {},
   session: null,
   isLoading: false,
 });
@@ -70,6 +72,30 @@ export function SessionProvider(props: React.PropsWithChildren) {
 
           setSession(null);
           router.replace("/login");
+        },
+
+        register: async (email: string, password: string) => {
+          try {
+            const response = await axios.post(
+              "http://192.168.100.36:5000/auth/register",
+              {
+                email,
+                password,
+              }
+            );
+
+            if (response.status === 201) {
+              console.log("Registration successful");
+
+              await setSession(JSON.stringify({ email }));
+            } else if (response.status === 409) {
+              console.log("Email already registered");
+            } else {
+              console.log("Registration failed");
+            }
+          } catch (error) {
+            console.log("Registration failed:", error);
+          }
         },
 
         session,
