@@ -86,10 +86,13 @@
 //   },
 // });
 import {
+  Alert,
+  Keyboard,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 
@@ -104,8 +107,10 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogin = async (email: string, password: string) => {
-    await signIn(email, password);
-    router.replace("/");
+    const response = await signIn(email, password);
+    console.info(response);
+    if (response) router.replace("/");
+    else Alert.alert("Login nereușit!");
   };
 
   const handleRegisterButton = () => {
@@ -115,40 +120,42 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bine ai revenit! 🎶</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Bine ai revenit! 🎶</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        placeholderTextColor="#999"
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          placeholderTextColor="#999"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        placeholderTextColor="#999"
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholderTextColor="#999"
+        />
 
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => handleLogin(email, password)}
-      >
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => handleLogin(email, password)}
+        >
+          <Text style={styles.loginButtonText}>Login</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.registerText}>Nu ai un cont?</Text>
+        <Text style={styles.registerText}>Nu ai un cont?</Text>
 
-      <TouchableOpacity onPress={handleRegisterButton}>
-        <Text style={styles.registerLink}>Înregistrează-te aici</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={handleRegisterButton}>
+          <Text style={styles.registerLink}>Înregistrează-te aici</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

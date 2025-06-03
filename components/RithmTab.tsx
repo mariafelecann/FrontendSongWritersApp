@@ -16,70 +16,70 @@ export function RithmTab({ sentiment, genre }: TabComponentProps) {
   > = {
     pop: {
       rhythm:
-        "Stick with a steady 4/4 beat — think punchy snares on 2 and 4, plus tight, loopable grooves.",
-      tempo:
-        "Usually between 100-130 BPM. Enough to get heads nodding, not so fast it loses clarity.",
+        "Structură simplă în 4/4, cu accente pe timpii 2 și 4. Groove-uri scurte și repetitive",
+      tempo: "Ideal între 100 și 130 BPM — rapid, dar nu grăbit.",
       extra:
-        "Pop thrives on repetition and clarity — think catchy hooks, simple progressions, and room for vocals to shine.",
+        "Pop-ul prinde atunci când e catchy, iar durata cântecului ar trebui să fie între 2-3 minute. Nu uita: Versuri simple, ritm ușor de ținut minte, și loc pentru voce să strălucească",
     },
     rap: {
       rhythm:
-        "Use syncopation and space — a minimal 4/4 can work magic with smart kick-snare placement.",
+        "Norma în majoritatea pieselor rap este un ritm de 4/4, cu toba mare pe timpul 1 și 3, și snare pe 2 și 4.",
       tempo:
-        "Typically around 85-110 BPM. Slower tempos let your lyrics breathe, faster ones add urgency.",
+        "Între 80 și 110 BPM, ca să ai timp să construiești rime și să-ți variezi livrarea.",
       extra:
-        "Focus on flow. Build beats that make space for rhyme schemes — punchy kicks and gritty hats go a long way.",
+        "Poți merge pe un beat minimalist sau pe unul complex — important e să lași versurile să conducă. Joacă-te cu ritmul, rimele și pauzele pentru impact.",
     },
     rock: {
       rhythm:
-        "4/4 is the backbone, but toss in some 6/8 or even a breakbeat for texture and energy shifts.",
+        "Preponderent în piesele rock se folosește un ritm de 4/4, dar dacă te îndrepți spre ceva mai alternativ, poți considera și ritmuri de 5/4, 7/8, sau 6/8. Accentele sunt pe timpii 2 și 4, iar tobele susțin energia și riff-urile de chitară dau personalitate.",
       tempo:
-        "Anywhere from 100 to 140 BPM. Mid-tempo for grooves, faster for drive and aggression.",
+        "De obicei între 100-140 BPM. Trebuie să aibă forță, dar și spațiu pentru tranziții puternice.",
       extra:
-        "Rock loves contrast. Use rhythm shifts to build tension — think verse calm, chorus explosion.",
+        "Dacă ai o chitară electrică, te descurci. Și nu uita: În rock iubim contrastul. Folosește schimbări în ritm ca să contruiești tensiune — versuri liniștite, o explozie la refren.",
     },
     country: {
       rhythm:
-        "Try a 3/4 or 6/8 swing feel, or a gentle 2-step in 4/4 with a laid-back shuffle.",
+        "Ritmurile variază în funcție de zonă — de la doine lente la hore și sârbe alerte. Se folosește 2/4, 3/4 sau chiar 7/8 în unele cazuri regionale.",
       tempo:
-        "Usually 75-110 BPM — storytelling needs space, but upbeat tracks can go faster.",
+        "Poate fi foarte lent (60-80 BPM, ca în doine) sau foarte rapid (120-160 BPM, cum e la sârbă).",
       extra:
-        "Country rhythms support the story. Keep it grounded and rhythmic, with room for emotion and twang.",
+        "Muzica populară spune povești despre viață, dragoste și sat. Instrumentele tradiționale — vioară, nai, acordeon — creează un sunet cald și autentic, e o idee bună să le integrezi :).",
     },
   };
 
   const tip = genreTips[genreKeyRithm] || {
     rhythm:
-      "Try a simple 4/4 beat to start. Layer in syncopation or off-beat accents for interest.",
+      "Cel mai folosit ritm în muzica modernă este de 4/4. Este standardul industrial, pentru că este ușor de urmărit și dansabil.",
     tempo:
-      "A comfortable range is 90-120 BPM — enough pace to keep attention, enough space for creativity.",
+      "Un tempo pun ar fi între 90-120 BPM —păstrează atenția, dar lasă loc pentru creativitate.",
     extra:
-      "This genre's a blend — feel free to borrow tricks from others and shape your own rhythm identity.",
+      "Genul ăsta e un blend. Inspiră-te din mai multe genuri muzicale, și păstrează ce se potrivește.",
   };
 
   return (
     <View style={styles.infoBox}>
       <Text style={styles.infoTitle}>Rithm & Tempo Insights 🥁</Text>
       <Text style={styles.infoText}>
-        Your lyrics matched <Text style={styles.genreHighlight}>{genre}</Text>,
-        so here’s how to vibe with that rhythmically:
+        Versurile tale se aseamănă genului{" "}
+        <Text style={styles.genreHighlight}>
+          {genre == "country" ? "muzică populară" : genre}
+        </Text>
+        , uite niște recomandări pentru linia melodică:
+      </Text>
+      <Text style={styles.infoText}>
+        <Text style={styles.infoTextBold}>🌀 Ritmul:</Text> {tip.rhythm}
       </Text>
 
       <Text style={styles.infoText}>
-        <Text style={styles.infoTextBold}>🌀 Rhythm Tip:</Text> {tip.rhythm}
+        <Text style={styles.infoTextBold}>⏱ Tempo:</Text> {tip.tempo}
       </Text>
 
       <Text style={styles.infoText}>
-        <Text style={styles.infoTextBold}>⏱ Tempo Range:</Text> {tip.tempo}
+        <Text style={styles.infoTextBold}>🎧 Tip:</Text> {tip.extra}
       </Text>
 
       <Text style={styles.infoText}>
-        <Text style={styles.infoTextBold}>🎧 Pro Tip:</Text> {tip.extra}
-      </Text>
-
-      <Text style={styles.infoText}>
-        Use these suggestions as a creative springboard — sometimes, breaking
-        the rules makes the best groove.
+        Ia ce-ți place din sugestiile astea și fă-le ale tale :)
       </Text>
     </View>
   );

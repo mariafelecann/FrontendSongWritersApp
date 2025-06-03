@@ -184,7 +184,10 @@ export default function PredictionResultScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vibe-ul piesei tale 🎵</Text>
-      <Text style={styles.genre}> {parsedGenre}</Text>
+      <Text style={styles.genre}>
+        {" "}
+        {parsedGenre == "country" ? "Muzică Populară" : parsedGenre}
+      </Text>
 
       <View style={styles.tabMenu}>
         {["Genre", "Mood", "Rithm", "Word"].map((tab) => (

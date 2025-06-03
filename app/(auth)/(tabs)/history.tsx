@@ -41,7 +41,7 @@ export default function HistoryScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Istoricul tău de versuri 🎶</Text>
+      <Text style={styles.title}>Versurile tale 🎶</Text>
       <FlatList
         data={songs}
         keyExtractor={(item) => item.title}
@@ -54,7 +54,9 @@ export default function HistoryScreen() {
             }}
           >
             <Text style={styles.songTitle}>{item.title}</Text>
-            <Text style={styles.songGenre}>{item.genre}</Text>
+            <Text style={styles.songGenre}>
+              {item.genre === "country" ? "muzică populară" : item.genre}
+            </Text>
           </TouchableOpacity>
         )}
       />

@@ -43,9 +43,10 @@ export default function NewSongScreen() {
   //   console.log("Analyzing lyrics:", lyrics);
   // };
   const handleAnalyze = async () => {
+    const connection = "172.20.10.14";
     try {
       const response = await axios.post(
-        "http://192.168.100.36:5000/ai/predict",
+        "http://" + connection + ":5000/ai/predict",
         {
           lyrics: lyrics,
         }
@@ -69,7 +70,7 @@ export default function NewSongScreen() {
         },
       });
     } catch (error: any) {
-      console.error("Prediction error:", error.toJSON?.() || error);
+      console.info("Prediction error:", error.toJSON?.() || error);
       alert("Failed to get prediction.");
     }
   };
@@ -101,7 +102,7 @@ export default function NewSongScreen() {
           <View style={styles.bottomBar}>
             <View style={styles.inspirationNote}>
               <Text style={styles.inspirationText}>
-                Ți-ai lăsat sufletul pe hârtie? E rândul{" "}
+                Gata? E rândul{" "}
                 <Text style={styles.inspirationHighlight}>
                   versurilor să-ți vorbească :)
                 </Text>{" "}

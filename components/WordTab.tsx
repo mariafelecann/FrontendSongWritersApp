@@ -34,35 +34,34 @@ export function WordTab({ lyrics, sentiment, genre }: TabComponentProps) {
   );
   return (
     <View style={styles.infoBox}>
-      <Text style={styles.infoTitle}>Word Analysis 🧠</Text>
+      <Text style={styles.infoTitle}>Statistici despre cuvintele tale 🧠</Text>
 
       <Text style={styles.infoText}>
-        <Text style={styles.infoTextBold}>Repetition Score: </Text>
-        {repetitionScore.toFixed(2)} - This means that about{" "}
-        {(repetitionScore * 100).toFixed(1)}% of the words in your lyrics are
-        repeated.
+        <Text style={styles.infoTextBold}>Scor de repetiție: </Text>
+        {repetitionScore.toFixed(2)} - Asta înseamnă că aproximativ{" "}
+        {(repetitionScore * 100).toFixed(1)}% din cuvintele din versurile tale
+        se repetă.
       </Text>
 
       <Text style={styles.infoText}>
-        Songs with moderate repetition (around 0.2-0.4) often feel catchy and
-        rhythmic. Genres like <Text style={styles.highlight}>Pop</Text> and{" "}
-        <Text style={styles.highlight}>Rap</Text> tend to embrace this more.
+        Cântecele cu repetiție mare sunt catchy și ritmate.
+        <Text style={styles.highlight}>Pop - ul </Text> și{" "}
+        <Text style={styles.highlight}>Muzica Populară </Text>
+        tind să urmeze această statistică.
       </Text>
 
       <Text style={styles.infoText}>
-        In contrast, low repetition (below 0.1) may indicate a richer
-        vocabulary, more typical in <Text style={styles.highlight}>Rock</Text>{" "}
-        or <Text style={styles.highlight}>Alternative</Text> genres.
+        În contrast, un scor mic indică un vocabular bogat, adesea întâlnit în{" "}
+        <Text style={styles.highlight}>Rap</Text> sau{" "}
+        <Text style={styles.highlight}>Rock</Text>.
       </Text>
 
       <Text style={styles.infoText}>
-        Your lyrics resemble the{" "}
-        <Text style={styles.genreHighlight}>{genre}</Text> genre, which{" "}
+        Versurile tale se aseamănă cu genul{" "}
+        <Text style={styles.genreHighlight}>{genre}</Text>, care{" "}
         {repetitionScore < 0.15
-          ? "typically features more diverse lyrics and storytelling."
-          : repetitionScore < 0.4
-          ? "often balances repetition and creativity for a strong rhythm."
-          : "leans into repetition for maximum memorability and flow."}
+          ? "surprinde adesea un vocabular bogat."
+          : "se bazează pe versuri catchy, ușor de memorat."}
       </Text>
     </View>
   );

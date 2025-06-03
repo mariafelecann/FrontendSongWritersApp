@@ -101,9 +101,10 @@ export class SongPublisher {
   }
 
   async fetchSongs(email: string) {
+    const connection = "172.20.10.14";
     try {
       const response = await axios.get(
-        `http://192.168.100.36:5000/crud/songs`,
+        "http://" + connection + ":5000/crud/songs",
         { params: { email } }
       );
       this.songs = response.data;
@@ -119,6 +120,7 @@ export class SongPublisher {
     genre: string,
     email: string
   ) {
+    const connection = "172.20.10.14";
     const payload = {
       title: title,
       email: email,
@@ -127,7 +129,7 @@ export class SongPublisher {
     };
     try {
       const response = await axios.post(
-        "http://192.168.100.36:5000/crud/add",
+        "http://" + connection + ":5000/crud/add",
         payload
       );
 

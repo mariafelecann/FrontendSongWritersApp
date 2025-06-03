@@ -1,3 +1,4 @@
+import { useFont } from "@shopify/react-native-skia";
 import { useState } from "react";
 import {
   Dimensions,
@@ -6,11 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { CartesianChart, Line } from "victory-native";
 // Importăm LineChart din react-native-gifted-charts
-import { LineChart } from "react-native-gifted-charts";
 // Asumăm că această interfață este definită altundeva
 import { TabComponentProps } from "./TabComponentInterface";
-
 export function GenreTab({
   decisionValues,
   sentiment, // Sentiment is not used in this specific component
@@ -24,59 +24,97 @@ export function GenreTab({
 
   const screenWidth = Dimensions.get("window").width;
 
-  // Asigurăm că decisionValues este un array valid de numere
-  // Transformăm datele în formatul așteptat de react-native-gifted-charts
-  // [{value: y1}, {value: y2}, ...]
+  // // Asigurăm că decisionValues este un array valid de numere
+  // // Transformăm datele în formatul așteptat de react-native-gifted-charts
+  // // [{value: y1}, {value: y2}, ...]
+  // const rawDataForChart =
+  //   Array.isArray(decisionValues) && decisionValues.length > 0
+  //     ? Array.isArray(decisionValues[0])
+  //       ? decisionValues[0]
+  //       : decisionValues
+  //     : [0, 0, 0, 0]; // Fallback la un array de zero dacă datele nu sunt valide
+
+  // //   const chartDataGifted = rawDataForChart.map((value) => ({ value: value }));
+  // const xAxisLabels = ["country", "pop", "rap", "rock"];
+  // const chartDataGifted = rawDataForChart.map((value, index) => ({
+  //   value: value,
+  //   label: xAxisLabels[index] || `Genre ${index + 1}`,
+  // }));
+
+  // // Etichetele pentru axa X
+
+  // // Determinăm valoarea maximă din date pentru a ajusta axa Y
+  // const maxValue = Math.max(...rawDataForChart);
+  // //   const stepValue = maxValue > 0 ? parseFloat((maxValue / 4).toFixed(1)) : 0.2;
+  // // // Calculează un pas rezonabil, evită divizia cu zero
+  // const yAxisMaxValue = maxValue > 0 ? maxValue * 1.1 : 1;
+  // const noOfSections = 4; // Aproximativ 4-5 secțiuni pe axa Y
+  // const stepValue = yAxisMaxValue / noOfSections;
+  // const containerHorizontalPadding = 20; // Ajustează dacă padding-ul real e altul
+  // const availableWidthForChartContainer =
+  //   screenWidth - containerHorizontalPadding * 2;
+
+  // const innerWidth =
+  //   availableWidthForChartContainer - styles.chartContainer.padding * 2;
+
+  // const yAxisLabels = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
+
+  // const yValues = chartDataGifted.map((item) => item.value);
+  // const maxY = Math.max(...yValues);
+  // const minY = Math.min(...yValues);
+  // const buffer = 10; // Add a buffer so the top/bottom of chart isn't cramped
+  // const adjustedMax = Math.ceil((maxY + buffer) / 10) * 10;
+  // const adjustedMin = Math.floor((minY - buffer) / 10) * 10;
+  // const sections = 4;
+
+  // const step = Math.round((adjustedMax - adjustedMin) / sections);
+  // const yAxisLabelTexts = Array.from({ length: sections + 1 }, (_, i) =>
+  //   (adjustedMin + step * i).toString()
+  // );
+
+  // const chartDataVictory = rawDataForChart.map((value, index) => ({
+  //   x: xAxisLabels[index] || `G${index + 1}`,
+  //   y: value,
+  // }));
+  const xAxisLabels = ["country", "pop", "rap", "rock"];
   const rawDataForChart =
     Array.isArray(decisionValues) && decisionValues.length > 0
       ? Array.isArray(decisionValues[0])
         ? decisionValues[0]
         : decisionValues
-      : [0, 0, 0, 0]; // Fallback la un array de zero dacă datele nu sunt valide
+      : [0, 0, 0, 0];
 
-  //   const chartDataGifted = rawDataForChart.map((value) => ({ value: value }));
-  const xAxisLabels = ["country", "pop", "rap", "rock"];
-  const chartDataGifted = rawDataForChart.map((value, index) => ({
-    value: value,
-    label: xAxisLabels[index] || `Genre ${index + 1}`,
+  const data = rawDataForChart.map((value, index) => ({
+    x: xAxisLabels[index] || `Genre ${index + 1}`,
+    y: value,
   }));
+  const font = useFont(require("../assets/fonts/Montserrat-Regular.ttf"), 10);
 
-  // Etichetele pentru axa X
+  function generateYTicks(values: number[], tickCount: number): number[] {
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    if (tickCount <= 1)
+      return [parseFloat(min.toFixed(1)), parseFloat(max.toFixed(1))];
 
-  // Determinăm valoarea maximă din date pentru a ajusta axa Y
-  const maxValue = Math.max(...rawDataForChart);
-  //   const stepValue = maxValue > 0 ? parseFloat((maxValue / 4).toFixed(1)) : 0.2;
-  // // Calculează un pas rezonabil, evită divizia cu zero
-  const yAxisMaxValue = maxValue > 0 ? maxValue * 1.1 : 1;
-  const noOfSections = 4; // Aproximativ 4-5 secțiuni pe axa Y
-  const stepValue = yAxisMaxValue / noOfSections;
-  const containerHorizontalPadding = 20; // Ajustează dacă padding-ul real e altul
-  const availableWidthForChartContainer =
-    screenWidth - containerHorizontalPadding * 2;
+    const step = (max - min) / (tickCount - 1);
+    return Array.from({ length: tickCount }, (_, i) =>
+      parseFloat((min + i * step).toFixed(1))
+    );
+  }
+  const lowestY = Math.min(...data.map((d) => d.y));
 
-  const innerWidth =
-    availableWidthForChartContainer - styles.chartContainer.padding * 2;
+  const extendedData = [...data, { x: " ", y: lowestY }];
+  const yValues = extendedData.map((d) => d.y);
 
-  const yAxisLabels = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
-
-  const yValues = chartDataGifted.map((item) => item.value);
-  const maxY = Math.max(...yValues);
-  const minY = Math.min(...yValues);
-  const buffer = 10; // Add a buffer so the top/bottom of chart isn't cramped
-  const adjustedMax = Math.ceil((maxY + buffer) / 10) * 10;
-  const adjustedMin = Math.floor((minY - buffer) / 10) * 10;
-  const sections = 4;
-
-  const step = Math.round((adjustedMax - adjustedMin) / sections);
-  const yAxisLabelTexts = Array.from({ length: sections + 1 }, (_, i) =>
-    (adjustedMin + step * i).toString()
-  );
+  const yTicks = generateYTicks(yValues, 5);
+  const xLabels = extendedData.map((d) => d.x);
+  console.info(data);
 
   return (
     <>
       <View style={styles.chartContainer}>
         {/* Graficul Linie din gifted-charts */}
-        <LineChart
+        {/* <LineChart
           areaChart
           curved
           isAnimated
@@ -93,7 +131,99 @@ export function GenreTab({
           noOfSections={4}
           height={80}
           yAxisLabelTexts={yAxisLabelTexts}
-        />
+        /> */}
+
+        {/* <CartesianChart
+          data={data}
+          xKey="x"
+          yKeys={["y"]}
+          padding={{ top: 20, bottom: 40, left: 10, right: 10 }}
+          // axisOptions={{
+          //   font,
+          //   tickValues: {
+          //     x: data.map((_, i) => i), // numeric indexes for ticks
+          //     y: yTicks, // or your numeric y ticks
+          //   },
+          //   tickCount: {
+          //     x: data.length,
+          //     y: 5,
+          //   },
+          //   formatXLabel: (tick) => {
+          //     if (typeof tick === "number") {
+          //       return xLabels[tick] ?? "";
+          //     }
+          //     return tick;
+          //   },
+          //   labelPosition: { x: "outset", y: "outset" },
+          //   axisSide: { x: "bottom", y: "left" },
+          // }}
+          xAxis={{
+            font,
+            tickCount: data.length + 1,
+            tickValues: data.map((_, i) => i),
+            labelPosition: "outset",
+            axisSide: "bottom",
+            labelColor: "#000",
+            formatXLabel: (tick) => {
+              if (typeof tick === "number") {
+                return xLabels[tick] ?? "";
+              }
+              return tick;
+            },
+          }}
+        >
+          {({ points }) => (
+            <Line
+              points={points.y}
+              color="rgb(237, 122, 14)"
+              strokeWidth={3}
+              animate={{ type: "timing", duration: 1200 }}
+            />
+          )}
+        </CartesianChart> */}
+        <CartesianChart
+          data={extendedData}
+          xKey="x"
+          yKeys={["y"]}
+          padding={{ top: 20, bottom: 40, left: 40, right: 10 }} // Increased left padding for y-axis labels
+          xAxis={{
+            font,
+            tickCount: data.length,
+            tickValues: data.map((_, i) => i),
+            labelPosition: "outset",
+            axisSide: "bottom",
+            labelColor: "#000",
+            formatXLabel: (tick) => {
+              if (typeof tick === "number") {
+                return xLabels[tick] ?? "";
+              }
+              return tick;
+            },
+          }}
+          yAxis={[
+            {
+              yKeys: ["y"], // must match your yKeys
+              font,
+              tickCount: yTicks.length,
+              tickValues: yTicks,
+              labelColor: "#000",
+              lineColor: "rgba(0,0,0,0.25)",
+              lineWidth: 1,
+              labelPosition: "outset",
+              axisSide: "left",
+              formatYLabel: (value) => value.toFixed(1),
+            },
+          ]}
+        >
+          {({ points }) => (
+            <Line
+              points={points.y}
+              color="rgb(237, 122, 14)"
+              strokeWidth={3}
+              animate={{ type: "timing", duration: 1200 }}
+            />
+          )}
+        </CartesianChart>
       </View>
       <Text style={styles.infoTitle}>Analiza Genului Muzical</Text>
       <Text style={styles.infoText}>
@@ -102,7 +232,7 @@ export function GenreTab({
         {"\n"}
         <Text style={styles.genreHighlight}>
           Genul care se potrivește cel mai bine cu versurile tale este{" "}
-          {genre || "N/A"}.
+          {genre == "country" ? "muzica populară" : genre || "N/A"}.
         </Text>
       </Text>
       <TouchableOpacity
@@ -262,9 +392,9 @@ const styles = StyleSheet.create({
   chartContainer: {
     marginVertical: 10, // Spațiu sus/jos față de elementele din jur
     borderRadius: 16, // Colțuri rotunjite
-    overflow: "hidden", // Asigură că graficul stă în limitele containerului rotunjit
+    overflow: "visible", // Asigură că graficul stă în limitele containerului rotunjit
     backgroundColor: "#fff", // Fundal alb pentru cardul graficului
-    padding: 16, // <-- Am mărit padding-ul interior pentru mai mult spațiu în jurul graficului
+    padding: 0, // <-- Am mărit padding-ul interior pentru mai mult spațiu în jurul graficului
     width: "100%", // Ocupă toată lățimea disponibilă
     marginBottom: 20,
     // Stiluri pentru umbră (funcționează pe iOS și Android)
@@ -273,6 +403,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+    height: 300,
   },
 
   sentimentCard: {

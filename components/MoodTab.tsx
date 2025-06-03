@@ -8,72 +8,71 @@ export function MoodTab({ sentiment, genre }: TabComponentProps) {
     : genre.toLowerCase();
   let customTip = "";
 
-  if (sentiment.label === "Positive 😊") {
+  if (sentiment.label === "Pozitiv 😊") {
     if (genreKey === "pop") {
       customTip =
-        "Pop music thrives with positive, uplifting lyrics. Think catchy hooks, feel-good messages, and danceable beats!";
+        "Muzica pop prinde viață cu versuri pozitive și optimiste. Gândește-te la refrene care rămân în minte, mesaje care te fac să te simți bine și ritmuri de dans!";
     } else if (genreKey === "country") {
       customTip =
-        "Country music embraces positivity, often with themes of love, family, or personal triumph. Add a twangy guitar and heartwarming vocals!";
+        "Muzica populară îmbrățișează pozitivitatea prin teme ca iubirea pentru țară, familia sau natura. O vioară sau un acordeon pot adăuga farmec și căldură melodiei";
     } else if (genreKey === "rap") {
       customTip =
-        "Positive rap lyrics can be all about self-empowerment, success, and fun. Add a bouncy beat and confident delivery!";
+        "Versurile pozitive în rap pot transmite încredere, succes și voie bună. Combină-le cu un beat energic și o interpretare sigură pe sine!";
     } else if (genreKey === "rock") {
       customTip =
-        "Positive rock can have anthemic qualities, ideal for powerful choruses. Think stadium rock with uplifting guitar riffs!";
+        "Rock-ul pozitiv are adesea un aer imnistic, perfect pentru refrene puternice. Gândește-te la riff-uri de chitară optimiste și atmosferă de concert!";
     }
-  } else if (sentiment.label === "Negative 😠") {
+  } else if (sentiment.label === "Negativ 😠") {
     if (genreKey === "pop") {
       customTip =
-        "Negative pop lyrics can add an interesting contrast. Imagine sad lyrics with an upbeat melody — think of Robyn’s 'Dancing On My Own'!";
+        "Versurile negative în muzica pop pot crea un contrast interesant. Imaginează-ți versuri triste acompaniate de o melodie veselă – cum e piesa 'Dancing On My Own' de Robyn!";
     } else if (genreKey === "country") {
       customTip =
-        "Country music's negative themes often dive into heartache, betrayal, or loss. A steel guitar with a melancholic vibe can help carry this mood.";
+        "Temele negative în muzica populară explorează adesea suferința, trădarea sau pierderea. O vioară poate amplifica această stare.";
     } else if (genreKey === "rap") {
       customTip =
-        "Rap with a negative tone can be raw and emotional, diving into struggle or disillusionment. Dark beats with impactful lyricism fit well here.";
+        "Rap-ul cu ton negativ poate fi sincer și emoțional, abordând lupte interioare sau dezamăgiri. Beat-uri întunecate și versuri profunde se potrivesc perfect.";
     } else if (genreKey === "rock") {
       customTip =
-        "Negative rock lyrics, especially in alternative or grunge, can be cathartic. Deeply emotional or introspective lyrics paired with distorted guitars create a raw atmosphere.";
+        "Versurile negative în rock, mai ales în alternative sau grunge, pot fi eliberatoare. Emoții puternice sau introspecție, însoțite de chitare distorsionate, creează o atmosferă brută.";
     }
-  } else if (sentiment.label === "Neutral 😐") {
+  } else if (sentiment.label === "Neutru 😐") {
     if (genreKey === "pop") {
       customTip =
-        "Neutral pop lyrics are often playful or observational. Focus on catchy rhythms with a simple but effective melody.";
+        "Versurile neutre în pop sunt adesea jucăușe sau observaționale. Concentrează-te pe ritmuri catchy și o melodie simplă, dar eficientă.";
     } else if (genreKey === "country") {
       customTip =
-        "Country music with neutral lyrics works well for storytelling, often in a narrative style with simple instrumentation like acoustic guitar and fiddle.";
+        "Muzica populară cu versuri neutre funcționează bine pentru povești, într-un stil narativ, cu o vioară pe fundal.";
     } else if (genreKey === "rap") {
       customTip =
-        "Neutral rap lyrics might be reflective or observational. Pair with a mellow beat to focus on flow and lyricism, creating a laid-back vibe.";
+        "Versurile neutre în rap pot fi reflexive sau observaționale. Combină-le cu un beat calm, punând accent pe flow și lirism, pentru un vibe relaxat.";
     } else if (genreKey === "rock") {
       customTip =
-        "Neutral rock can be versatile, but is often best in alternative sub-genres. Focus on dynamic instrumentals, shifting between introspective verses and powerful choruses.";
+        "Rock-ul neutru este versatil, dar strălucește în subgenurile alternative. Pune accent pe instrumentație dinamică, alternând între versuri introspective și refrene energice.";
     }
   }
 
   return (
     <View style={styles.sentimentCard}>
-      <Text style={styles.sentimentTitle}>Mood of your lyrics:</Text>
+      <Text style={styles.sentimentTitle}>Mood-ul versurilor tale:</Text>
       <Text style={styles.sentimentLabel}>{sentiment.label}</Text>
       <Text style={styles.sentimentConfidence}>
         Confidence: {(sentiment.confidence * 100).toFixed(1)}%
       </Text>
 
       <Text style={styles.infoText}>
-        This mood suggests your lyrics carry a{" "}
+        Acest mood sugerează că versurile tale transmit un ton{" "}
         <Text style={styles.infoTextBold}>{sentiment.label.toLowerCase()}</Text>{" "}
-        emotional tone.
       </Text>
 
       <Text style={styles.customTip}>{customTip}</Text>
 
       <Text style={styles.infoText}>
-        Consider how this mood ties into the broader musical arrangement. For
-        example, a positive mood might inspire a light, upbeat melody, while a
-        negative tone could benefit from darker, more intense instrumentation.
-        Experiment with tempo, key choice, and dynamics to further enhance the
-        emotional impact of the lyrics.
+        Gândește-te cum se poate lega acest sentiment cu aranjamentul muzical.
+        De exemplu, o stare pozitivă poate inspira o melodie veselă și energică,
+        în timp ce un ton negativ s-ar potrivi mai bine cu o instrumentație
+        lentă și intensă. Experimentează cu tempo-ul, tonalitatea și dinamica
+        pentru a amplifica impactul emoțional al versurilor.
       </Text>
     </View>
   );

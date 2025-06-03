@@ -192,7 +192,6 @@ export default function HomeScreen() {
     if (!status.isLoaded) return;
 
     if (status.didJustFinish) {
-      // Video finished and will remain on the last frame
       console.log("Video finished playing.");
     }
   };
@@ -207,7 +206,7 @@ export default function HomeScreen() {
       />
 
       <Link style={styles.addButton} href="/newsong">
-        <Text style={styles.addButtonText}>Scrie un Nou Cântec</Text>
+        <Text style={styles.addButtonText}>Scrie un Cântec Nou</Text>
       </Link>
       <View style={styles.inspirationContainer}>
         <Text style={styles.inspirationTitle}>Inspirația zilei:</Text>

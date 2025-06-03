@@ -4,15 +4,17 @@ import React from "react";
 import { useStorageState } from "./useState";
 
 const AuthContext = React.createContext<{
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<boolean>;
 
   signOut: () => void;
+  signOutAfterDeletion: () => void;
   register: (email: string, password: string) => Promise<void>;
   session?: string | null;
   isLoading: boolean;
 }>({
-  signIn: async () => {},
+  signIn: async () => false,
   signOut: () => null,
+  signOutAfterDeletion: () => null,
   register: async () => {},
   session: null,
   isLoading: false,
@@ -32,13 +34,15 @@ export function useSession() {
 export function SessionProvider(props: React.PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
   const router = useRouter();
+  const connection = "172.20.10.14";
   return (
     <AuthContext.Provider
       value={{
         signIn: async (email: string, password: string) => {
           try {
+            console.info("Inainte de Login request in back");
             const response = await axios.post(
-              "http://192.168.100.36:5000/auth/login",
+              "http://" + connection + ":5000/auth/login",
               {
                 email,
                 password,
@@ -46,15 +50,20 @@ export function SessionProvider(props: React.PropsWithChildren) {
             );
 
             if (response.status === 200) {
+              console.info("Login request in back reusit");
               const token = response.data?.token;
               const email = response.data?.email;
               console.info(JSON.stringify({ token, email }));
               await setSession(JSON.stringify({ token, email }));
+              return true;
             } else {
-              console.log("Invalid credentials");
+              console.error("Login request in back failed");
+              console.error("Invalid credentials");
+              return false;
             }
           } catch (error) {
-            console.log("Login failed:", error);
+            //console.error("Login failed:", error);
+            return false;
           }
         },
 
@@ -62,7 +71,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
           if (session) {
             try {
               const { email } = JSON.parse(session);
-              await axios.post("http://192.168.100.36:5000/auth/logout", {
+              await axios.post("http://" + connection + ":5000/auth/logout", {
                 email,
               });
             } catch (err) {
@@ -74,10 +83,15 @@ export function SessionProvider(props: React.PropsWithChildren) {
           router.replace("/login");
         },
 
+        signOutAfterDeletion: () => {
+          setSession(null);
+          router.replace("/login");
+        },
+
         register: async (email: string, password: string) => {
           try {
             const response = await axios.post(
-              "http://192.168.100.36:5000/auth/register",
+              "http://" + connection + ":5000/auth/register",
               {
                 email,
                 password,
